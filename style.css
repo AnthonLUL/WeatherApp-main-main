@@ -138,11 +138,12 @@ body {
 
 /* Custom style to change the background color and text color of the day cards */
 .day-card {
-
 }
 
 /* Custom style to change the background color of the expanded card */
 .expanded-card {
+  width: 200px; /* Set a fixed width for each expanded card */
+  margin-right: 10px;
 }
 
 /* Custom style to change the outline color of the day buttons */
@@ -152,5 +153,8 @@ body {
 /* Custom style to change the background color and text color of the forecast information */
 .card {
   background-color: rgba(0, 0, 0, 0.3); /* Change the last value (0.8) for the desired opacity */
-  /* Other styles for the card */
+}
+
+.weekly-forecast-background {
+  background-image: none !important;
 }

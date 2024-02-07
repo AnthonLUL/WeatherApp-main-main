@@ -175,6 +175,11 @@ const app = Vue.createApp({
                 processedData[formattedDate].push({
                     time: date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                     temperature: Math.round(forecast.main.temp),
+                    high: Math.round(forecast.main.temp_max),
+                    low: Math.round(forecast.main.temp_min),
+                    humidity: forecast.main.humidity,
+                    windSpeed: forecast.wind.speed,
+                    windDirection: forecast.wind.deg, // Add wind direction if available
                     description: forecast.weather[0].description,
                 });
             });
@@ -426,8 +431,9 @@ const app = Vue.createApp({
         changeBackground(weatherData) {
             // Check if it's the daily forecast
             if (!this.showWeeklyForecast) {
+                document.body.classList.remove('weekly-forecast-background');
                 const body = document.querySelector('.bg-image');
-
+        
                 // Map weather descriptions to corresponding background images
                 const backgroundMappings = {
                     'Clear': 'url("https://mdbgo.io/ascensus/mdb-advanced/img/clear.gif")',
@@ -437,14 +443,19 @@ const app = Vue.createApp({
                     'Snow': 'url("https://mdbgo.io/ascensus/mdb-advanced/img/snow.gif")',
                     'Mist': 'url("https://example.com/mist-background.jpg")',
                 };
-
+        
                 // Get the background image URL based on the weather description
                 const mainWeather = weatherData.weather[0].main;
                 const backgroundImage = backgroundMappings[mainWeather] || '';
-
+        
                 // Set the background image of the body
                 body.style.backgroundImage = backgroundImage;
-            }
+            } else {
+                // Remove background image and add class for styling
+                const body = document.querySelector('.bg-image');
+                body.style.backgroundImage = 'none';
+                document.body.classList.add('weekly-forecast-background');
+            }        
             },
         //#endregion
 

@@ -125,9 +125,9 @@
                                 </div>
 
                             <!-- Weekly Forecast Section -->
-                            <div class="weekly-forecast no-Background" v-if="weatherData && showWeeklyForecast">
+                            <div class="weekly-forecast" v-if="weatherData && showWeeklyForecast">
                                 <h1 class="city">6 day forecast {{ getFullLocation() }}</h1>
-                                <div v-for="(forecast, date) in weatherData.weeklyWeatherData" :key="date">
+                                <div v-for="(forecast, date) in weatherData.weeklyWeatherData" :key="date" style="display: inline-block;">
                                     <div :class="{ 'day-card': true, 'expanded-card': expandedDays.includes(date) }">
                                         <button class="btn btn-outline-info mb-2" @click="toggleDayExpansion(date)">
                                             {{ formatDay(date) }}: {{ forecast[0].temperature }}°<span v-if="unit === 'metric'">C</span><span v-else>F</span>
@@ -144,7 +144,7 @@
                                                             v-else>F</span> /
                                                         Low: {{ forecast[0].low }}°<span v-if="unit === 'metric'">C</span><span v-else>F</span><br>
                                                         Humidity: {{ forecast[0].humidity }}%<br>
-                                                        Wind: {{ forecast[0].windSpeed }} mph {{ forecast[0].windDirection }}
+                                                        Wind: {{ forecast[0].windSpeed }} mph
                                                     </p>
                                                 </div>
                                             </div>

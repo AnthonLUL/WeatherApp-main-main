@@ -23,24 +23,35 @@
     <title>Weather App</title>
 </head>
 
-<body>
-    <section class="vh-100">
-        <div class="container py-5">
-
+<body id="app">
+    
+            <!-- Search Bar -->
+   
+    <div class="container py-5">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-9 col-lg-7 col-xl-5">
-
-                    <div id="app" class="card text-white bg-image shadow-4-strong"
-                        style="background-image: url('')">
                         <div class="row">
                             <div class="col-md-12">    
                                 <!-- Header Row -->
                                 <div class="header">
+                                    
                                 <!-- Navbar -->
                                 <div class="navbar justify-content-center align-items-center">
+                                <div class="row">
+                                    <div class="search-bar">
+                                        <div class="search-container">
+                                            <input type="text" id="cityInput" placeholder="Search City" v-model="searchedCity" @keydown.enter="searchWeather">
+                                            <button class="search-button" @click="searchWeather">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="navigation">
                                     <a href="#" @click="switchToDailyForecast" class="mx-3">Today</a>
                                     <a href="#" @click="switchToWeeklyForecast" class="mx-3">Weekly</a>
                                     <a href="#" @click="" class="mx-3">Monthly</a>
+                                </div>
 
                                     <!-- Toggle Unit Button and Options Container -->
                                     <div class="toggle-unit-container">
@@ -54,30 +65,16 @@
                                     </div>
                                 </div>
 
-
-                                <!-- Search Bar -->
-                                <div class="search-bar">
-                                    <div class="search-container">
-                                        <input type="text" id="cityInput" placeholder="Search City" v-model="searchedCity" @keydown.enter="searchWeather">
-                                        <button class="search-button" @click="searchWeather">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
                                 </div>
                             </div>
                         </div>
         
-
-                        <div class="row">
-                            <div class="col-md-12">
-
+                        <div class="card text-white bg-image shadow-4-strong"
+                            style="background-image: url('') " v-if="!showWeeklyForecast">
                         <!-- Daily Forecast Section -->
-                        <div class="container">
                             <div class="forecast-container text-center">
                                 <!-- Forecast Section Column -->
-                                <div v-if="!showWeeklyForecast" class="forecast-section">
+                                <div class="forecast-section">
                                     <div v-if="loading">Loading...</div>
                                     <div v-else>
                                         <!-- Error Message -->
@@ -90,82 +87,179 @@
                                             <span class="temperature">{{ roundTemperature(weatherData.main.temp) }}°<span
                                                     v-if="unit === 'metric'">C</span><span
                                                     v-else>F</span></span>
-                                            <p class="minmax">High: {{ roundTemperature(weatherData.main.temp_max) }}°<span
-                                                    v-if="unit === 'metric'">C</span><span
-                                                    v-else>F</span> • Low: {{ roundTemperature(weatherData.main.temp_min) }}°<span
-                                                    v-if="unit === 'metric'">C</span><span
-                                                    v-else>F</span></p>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                                        <div class="card-body p-4 border-top border-bottom mb-2">
-                                            <div class="row text-center justify-content-center">
-                                                <!-- Morning Card -->
-                                                <div class="forecast-card">
-                                                    <h2>Morning</h2>
-                                                    <p>{{ roundTemperature(morningTemperature) }}°<span v-if="unit === 'metric'">C</span><span
-                                                            v-else>F</span></p>
+                        <div class="dayCard" v-if="!showWeeklyForecast">
+                            <div class="text-black mb-3">
+                                <div class="card-body">
+                                    <div class="row text-center justify-content-center">
+                                        <!-- Morning Card -->
+                                        <div class="forecast-card">
+                                            <h2>Morning</h2>
+                                            <p>{{ roundTemperature(morningTemperature) }}°<span v-if="unit === 'metric'">C</span><span v-else>F</span></p>
+                                        </div>
+                                        <!-- Add a line here -->
+                                        <div class="divider"></div>
+                                        <!-- Afternoon Card -->
+                                        <div class="forecast-card">
+                                            <h2>Afternoon</h2>
+                                            <p>{{ roundTemperature(afternoonTemperature) }}°<span v-if="unit === 'metric'">C</span><span v-else>F</span></p>
+                                        </div>
+                                        <!-- Add a line here -->
+                                        <div class="divider"></div>
+                                        <!-- Night Card -->
+                                        <div class="forecast-card">
+                                            <h2>Night</h2>
+                                            <p>{{ roundTemperature(nightTemperature) }}°<span v-if="unit === 'metric'">C</span><span v-else>F</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="detailedCard" v-if="!showWeeklyForecast">
+                            <div class="text-black mb-3">
+                                <div class="card-header">Detailed Weather Information</div>
+                                <div class="card-body">
+                                    <div v-if="weatherData">
+                                        <div class="feelsLike">
+                                            <div>
+                                                <p style="margin-bottom: -15px;">Feels Like</p>
+                                                <p style="font-size: -webkit-xxx-large;">{{roundTemperature(weatherData.main.feels_like)}}°<span v-if="unit === 'metric'">C</span><span v-else>F</span></p>
+                                            </div>
+
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <!-- Left Section -->
+                                            <div class="col-md-6">
+                                                
+                                                <div class="TodayDetails">
+                                                    <!-- Place the ListItem elements for the left section here -->
+                                                    <div class="ListItem">
+                                                        <!-- SVG icon -->
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-thermometer-high" viewBox="0 0 16 16">
+                                                            <path d="M9.5 12.5a1.5 1.5 0 1 1-2-1.415V2.5a.5.5 0 0 1 1 0v8.585a1.5 1.5 0 0 1 1 1.415"/>
+                                                            <path d="M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1"/>
+                                                        </svg>
+                                                        <div>
+                                                            <p>High/low: {{ roundTemperature(weatherData.main.temp_max) }}°<span v-if="unit === 'metric'">C</span><span v-else>F</span> / {{roundTemperature(weatherData.main.temp_min)}}°<span v-if="unit === 'metric'">C</span><span v-else>F</span></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ListItem">
+                                                        <!-- SVG icon -->
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-droplet-fill" viewBox="0 0 16 16">
+                                                            <path d="M8 16a6 6 0 0 0 6-6c0-1.655-1.122-2.904-2.432-4.362C10.254 4.176 8.75 2.503 8 0c0 0-6 5.686-6 10a6 6 0 0 0 6 6M6.646 4.646l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448c.82-1.641 1.717-2.753 2.093-3.13"/>
+                                                        </svg>
+                                                        <div>
+                                                            <p>Fertility: {{weatherData.main.humidity}}%</p>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="ListItem">
+                                                        <!-- SVG icon -->
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-collapse" viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8m7-8a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 4.293V.5A.5.5 0 0 1 8 0m-.5 11.707-1.146 1.147a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 11.707V15.5a.5.5 0 0 1-1 0z"/>
+                                                        </svg>
+                                                        <div>
+                                                            <p>Pressure: {{weatherData.main.pressure}} mb</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="ListItem">
+                                                        <!-- SVG icon -->
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                                                        </svg>
+                                                        <div>
+                                                            <p>Visibility: {{weatherData.visibility}}</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-
-                                                <!-- Afternoon Card -->
-                                                <div class="forecast-card">
-                                                    <h2>Afternoon</h2>
-                                                    <p>{{ roundTemperature(afternoonTemperature) }}°<span v-if="unit === 'metric'">C</span><span
-                                                            v-else>F</span></p>
-                                                </div>
-
-                                                <!-- Night Card -->
-                                                <div class="forecast-card">
-                                                    <h2>Night</h2>
-                                                    <p>{{ roundTemperature(nightTemperature) }}°<span v-if="unit === 'metric'">C</span><span
-                                                            v-else>F</span></p>
+                                            </div>
+                                            <!-- Right Section -->
+                                            <div class="col-md-6">
+                                                <div class="TodayDetails">
+                                                    <!-- Place the ListItem elements for the right section here -->
+                                                    <div class="ListItem">
+                                                        <!-- SVG icon -->
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wind" viewBox="0 0 16 16">
+                                                            <path d="M12.5 2A2.5 2.5 0 0 0 10 4.5a.5.5 0 0 1-1 0A3.5 3.5 0 1 1 12.5 8H.5a.5.5 0 0 1 0-1h12a2.5 2.5 0 0 0 0-5m-7 1a1 1 0 0 0-1 1 .5.5 0 0 1-1 0 2 2 0 1 1 2 2h-5a.5.5 0 0 1 0-1h5a1 1 0 0 0 0-2M0 9.5A.5.5 0 0 1 .5 9h10.042a3 3 0 1 1-3 3 .5.5 0 0 1 1 0 2 2 0 1 0 2-2H.5a.5.5 0 0 1-.5-.5"/>
+                                                        </svg>
+                                                        <div>
+                                                            <p>Wind Speed: {{weatherData.wind.speed}} mph</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ListItem">
+                                                        <!-- SVG icon -->
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clouds-fill" viewBox="0 0 16 16">
+                                                            <path d="M11.473 9a4.5 4.5 0 0 0-8.72-.99A3 3 0 0 0 3 14h8.5a2.5 2.5 0 1 0-.027-5"/>
+                                                            <path d="M14.544 9.772a3.5 3.5 0 0 0-2.225-1.676 5.5 5.5 0 0 0-6.337-4.002 4.002 4.002 0 0 1 7.392.91 2.5 2.5 0 0 1 1.17 4.769z"/>
+                                                          </svg>
+                                                        <div>
+                                                            <p>Clouds: {{weatherData.clouds.all}}%</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                             <!-- Weekly Forecast Section -->
                             <div class="weekly-forecast" v-if="weatherData && showWeeklyForecast">
-                                <h1 class="city">6 day forecast {{ getFullLocation() }}</h1>
-                                <div v-for="(forecast, date) in weatherData.weeklyWeatherData" :key="date" style="display: inline-block;">
-                                    <div :class="{ 'day-card': true, 'expanded-card': expandedDays.includes(date) }">
-                                        <button class="btn btn-outline-info mb-2" @click="toggleDayExpansion(date)">
-                                            {{ formatDay(date) }}: {{ forecast[0].temperature }}°<span v-if="unit === 'metric'">C</span><span v-else>F</span>
-                                        </button>
-                                        <div v-show="expandedDays.includes(date)">
-                                            <div v-if="forecast.length > 0" class="card text-white mb-3">
-                                                <div class="card-header">{{ formatDay(date) }}</div>
-                                                <div class="card-body">
-                                                    <h5 class="card-title">{{ forecast[0].description }}</h5>
-                                                    <p class="card-text">
-                                                        Temperature: {{ forecast[0].temperature }}°<span v-if="unit === 'metric'">C</span><span
-                                                            v-else>F</span><br>
-                                                        High: {{ forecast[0].high }}°<span v-if="unit === 'metric'">C</span><span
-                                                            v-else>F</span> /
-                                                        Low: {{ forecast[0].low }}°<span v-if="unit === 'metric'">C</span><span v-else>F</span><br>
-                                                        Humidity: {{ forecast[0].humidity }}%<br>
-                                                        Wind: {{ forecast[0].windSpeed }} mph
-                                                    </p>
+                                <div class="text-black mb-3">
+                                    <div class="city">6 day forecast for {{ getFullLocation() }} </div>
+                                        <div class="card-body">
+                                            <div v-for="(forecast, date) in weatherData.weeklyWeatherData" :key="date">
+                                                <div :class="{ 'day-card': true, 'expanded-card': expandedDays.includes(date) }">
+                                                    <button class="btn btn-outline-info mb-2" @click="toggleDayExpansion(date)">
+                                                        {{ formatDay(date) }}: {{ forecast[0].temperature }}°<span v-if="unit === 'metric'">C</span><span v-else>F</span>
+                                                    </button>
+                                                    <div v-show="expandedDays.includes(date)">
+                                                        <div v-if="forecast.length > 0" class="card text-white mb-3">
+                                                            <div class="card-header">{{ formatDay(date) }}</div>
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">{{ forecast[0].description }}</h5>
+                                                                <p class="card-text">
+                                                                    Temperature: {{ forecast[0].temperature }}°<span v-if="unit === 'metric'">C</span><span
+                                                                        v-else>F</span><br>
+                                                                    High: {{ forecast[0].high }}°<span v-if="unit === 'metric'">C</span><span
+                                                                        v-else>F</span> /
+                                                                    Low: {{ forecast[0].low }}°<span v-if="unit === 'metric'">C</span><span v-else>F</span><br>
+                                                                    Humidity: {{ forecast[0].humidity }}%<br>
+                                                                    Wind: {{ forecast[0].windSpeed }} mph
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>  
-
-                        <!-- Map -->
-                        <div id="map" style='width: 400px; height: 300px;'></div>
+                            </div> 
                     </div>
-
                 </div>
             </div>
 
         </div>
-    </section>
+    
 
     <!-- Import Js -->
 
     <script src="app.js"></script>
+
 </body>
 
 </html>

@@ -10,6 +10,7 @@ const app = Vue.createApp({
             openWeatherApiUrl: 'https://api.openweathermap.org/data/2.5/weather',
             mapBoxApiKey: 'pk.eyJ1IjoiYW50aG9ubHVsIiwiYSI6ImNscXQ1bTBhZzQ3NHAydW1rMnBpcXVqYXYifQ.MNj2_esKLSXToDiEGK3byw',
             cities: [],
+            citySuggestions: [],
             searchedCity: '',
             showWeeklyForecast: false,
             unit: 'metric',
@@ -19,7 +20,7 @@ const app = Vue.createApp({
             nightTemperature: null,
             hourlyForecast: [],
             fetchCounter: 0,
-            showUnitMenu: false
+            showUnitMenu: false,
         };
     },
     methods: { 
@@ -43,7 +44,7 @@ const app = Vue.createApp({
         async fetchWeatherData(city) {
             try {
                 const response = await axios.get(this.buildWeatherApiUrl(city));
-                // Assuming you want to store data for each city
+                
                 city.weatherData = response.data;
             } catch (error) {
                 // Handle error
@@ -92,8 +93,10 @@ const app = Vue.createApp({
                             name: city,
                             main: weatherResponse.data.main,
                             weather: weatherResponse.data.weather,
-                            components: locationDetails.components, // Add components to weather data
-                            // Add the current temperature here
+                            components: locationDetails.components, 
+                            wind: weatherResponse.data.wind,
+                            visibility: weatherResponse.data.visibility, 
+                            clouds: weatherResponse.data.clouds, 
                             currentTemperature: weatherResponse.data.main.temp,
                         };
 
@@ -245,7 +248,8 @@ const app = Vue.createApp({
                     this.loading = false;
                 }
             }
-        },          
+            
+        },         
         //#endregion
         
         //#region Switching between forecasts
@@ -458,8 +462,7 @@ const app = Vue.createApp({
             }        
             },
         //#endregion
-
-             
+        
         groupForecastByDay(forecastList) {
             const groupedForecast = {};
         
@@ -489,15 +492,25 @@ const app = Vue.createApp({
 
             return `${hours}:${minutes}`;
         },
-
-
-
+        getRainValue() {
+            // Check if weatherData and rain object exist
+            if (this.weatherData && this.weatherData.rain) {
+              // Check if the desired property exists in the rain object
+              if ('1h' in this.weatherData.rain) {
+                // Return the value of the property
+                return this.weatherData.rain['1h'];
+              }
+            }
+            // Return a default value if the property doesn't exist
+            return 'N/A';
+          }
     },
     async mounted() {
         try {
             // Automatically fetch weather for the user's current location
             await this.getCurrentLocationWeather();
     
+            
             // Fetch the daily forecast data for the current location
             await this.fetchDailyForecast({
                 name: this.weatherData.name,
@@ -516,6 +529,8 @@ const app = Vue.createApp({
             for (const city of this.cities) {
                 await this.fetchWeatherData(city);
             }
+
+
         } catch (error) {
             console.error('Error fetching data:', error);
             this.error = 'Error fetching data.';

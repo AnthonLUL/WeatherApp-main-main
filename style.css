@@ -45,6 +45,10 @@ body {
   padding: 20px;
   z-index: 1000; /* Ensure it's on top of other elements */
 }
+.container {
+  display: flex;
+  justify-content: space-between; /* Align items to the start and end of the container */
+}
 
 .navbar a:focus {
   color: #b148d2;
@@ -90,6 +94,8 @@ body {
 
 .search-bar {
   margin: 10px ;
+  width: 900px;
+  background-color:#333;
 }
 
 .search-container {
@@ -102,7 +108,10 @@ body {
 }
 
 .weekly-forecast .city {
-  color: #fff !important;
+  color: rgb(0, 0, 0) !important;
+  border-radius: 10px;
+  width: 700px;
+
 }
 
 #cityInput {
@@ -129,6 +138,8 @@ body {
 /* Custom style to change the background color of the forecast section */
 .weekly-forecast {
   padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
 }
 
 /* Custom style to change the text color of the city heading */
@@ -136,8 +147,10 @@ body {
   color: #333; /* Change to your preferred text color */
 }
 
-/* Custom style to change the background color and text color of the day cards */
-.day-card {
+.divider {
+  width: 1px; /* Set the width of the divider */
+  background-color: #ddd; /* Set the color of the divider */
+  margin: 0 10px; /* Adjust the margin for spacing */
 }
 
 /* Custom style to change the background color of the expanded card */
@@ -152,9 +165,39 @@ body {
 
 /* Custom style to change the background color and text color of the forecast information */
 .card {
-  background-color: rgba(0, 0, 0, 0.3); /* Change the last value (0.8) for the desired opacity */
+  background-color: rgba(0, 0, 0, 0.3); 
+  width: 600px;
+  height: 200px;
+  overflow: hidden;
+  margin-bottom: 5%;
+  border-radius: 10px;
+}
+.dayCard{
+  width: 600px;
+  height: 200px;
+  overflow: hidden;
+  background-color: #fff;
+  margin-top: 20px; /* Add margin to separate from the previous section */
+  margin-bottom: 5%;
+  border-radius: 10px;
+
 }
 
-.weekly-forecast-background {
-  background-image: none !important;
+.detailedCard{
+  width: 600px;
+  height: 350px;
+  overflow: hidden;
+  background-color: #fff;
+  border-radius: 10px;
+
+}
+
+.ListItem{
+  display: flex;
+  align-items: center;
+}
+
+svg{
+  margin-bottom: 17px !important;
+  margin-right: 40px !important;
 }

@@ -12,6 +12,12 @@ body {
   font-size: 60px;
 }
 
+.weekly-temperature{
+  font-weight: 700;
+  font-size: 60px;
+  padding-left: 60px;
+}
+
 .description{
   margin-bottom: -20px;
 }
@@ -64,14 +70,20 @@ body {
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: #ffffff; /* Set the background color */
-  border: 1px solid #dddddd; /* Add a border for separation */
-  border-radius: 5px; /* Optional: Add border-radius for rounded corners */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add box shadow for a subtle effect */
+  background-color: #29262c; /* Set the background color */
+  border: 1px solid #b148d2; /* Add a border for separation */
+  border-radius: 5px; 
   padding: 5px;
+  color: white;
 }
 .unit-options-container {
   position: relative;
+}
+
+.unit-options button{
+  background-color: #39353c;
+  border-color: #111315;
+  color: #fff;
 }
 
 .toggle-unit-button {
@@ -83,7 +95,7 @@ body {
 }
 
 .toggle-unit-button .fas.fa-bars {
-  font-size: 20px; /* Adjust the size as needed */
+  font-size: 20px; 
 }
 
 
@@ -104,14 +116,15 @@ body {
   border: 1px solid #111315;
   border-radius: 5px;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.3); /* Black background with 80% opacity */
+  background-color: rgba(0, 0, 0, 0.3); 
 }
 
 .weekly-forecast .city {
   color: rgb(0, 0, 0) !important;
   border-radius: 10px;
-  width: 700px;
-
+  width: 600px;
+  font-weight: 700;
+  font-size: 40px;
 }
 
 #cityInput {
@@ -120,11 +133,11 @@ body {
   padding: 10px;
   font-size: 16px;
   color: #fff;
-  background: transparent; /* Transparent background to let the container background show through */
+  background: transparent; 
 }
 
 .search-button {
-  background-color: rgba(177,72,210, 0.5); /* Adjusted color with 50% opacity */
+  background-color: rgba(177,72,210, 0.5); 
   color: #fff;
   border: none;
   padding: 10px;
@@ -135,35 +148,34 @@ body {
   background-color: rgba(177,72,210, 0.8);
 }
 
-/* Custom style to change the background color of the forecast section */
 .weekly-forecast {
   padding: 20px;
-  background-color: #fff;
+  background-color: rgb(255, 255, 255);
   border-radius: 10px;
-}
-
-/* Custom style to change the text color of the city heading */
-.weekly-forecast .city {
-  color: #333; /* Change to your preferred text color */
+  margin-left: 150px;
+  margin-top: -80px;
 }
 
 .divider {
-  width: 1px; /* Set the width of the divider */
-  background-color: #ddd; /* Set the color of the divider */
-  margin: 0 10px; /* Adjust the margin for spacing */
+  width: 1px; 
+  background-color: #ddd; 
+  margin: 0 30px; 
+  margin-top: 20px;
 }
 
-/* Custom style to change the background color of the expanded card */
 .expanded-card {
-  width: 200px; /* Set a fixed width for each expanded card */
+  width: 500px;
   margin-right: 10px;
 }
 
-/* Custom style to change the outline color of the day buttons */
 .day-card button {
+  width: 130px;
 }
 
-/* Custom style to change the background color and text color of the forecast information */
+.card-title{
+  margin-top: -15px;
+}
+
 .card {
   background-color: rgba(0, 0, 0, 0.3); 
   width: 600px;
@@ -185,7 +197,7 @@ body {
 
 .detailedCard{
   width: 600px;
-  height: 350px;
+  height: 300px;
   overflow: hidden;
   background-color: #fff;
   border-radius: 10px;
@@ -195,6 +207,16 @@ body {
 .ListItem{
   display: flex;
   align-items: center;
+}
+
+.wListItem{
+  display: flex;
+  align-items: center;
+  padding-bottom: 8px;
+}
+
+.wListItem svg{
+  margin-bottom: 0px !important;
 }
 
 svg{

@@ -5,5 +5,16 @@
     "bootstrap-vue": "^2.23.1",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"
-  }
+  },
+  "name": "weatherapp-main-main",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
